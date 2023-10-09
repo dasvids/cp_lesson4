@@ -5,12 +5,16 @@ class Term {
     }
 
     toString() {
-        if (this.sign === "+") {
+        if (this.sign === "+" || this.sign === "") {
+            if (this.expr === "0") {
+                return "0";
+            }
             return this.expr;
         } else if (this.sign === "-") {
+            if (this.expr === "0") {
+                return "0";
+            }
             return `-${this.expr}`;
-        } else {
-            return this.expr;
         }
     }
 
@@ -24,17 +28,18 @@ class Term {
                 newCoefficient = Math.abs(newCoefficient);
                 this.sign = this.sign === '+' ? '-' : '+';
             }
-    
+            if (power === 0) {
+                return new Term("0", "+"); // ну очевидно что произойдет
+            }
             if (newPower === 0) {
-                // Возвращаем терм с коэффициентом 0
-                return new Term('0', this.sign);
+                return new Term("0", "+");
             } else if (newPower === 1) {
                 return new Term(`${newCoefficient}*${variable}`, this.sign);
             } else {
                 return new Term(`${newCoefficient}*${variable}^${newPower}`, this.sign);
             }
         } else {
-            return new Term('0', ''); // Если переменной нет, возвращаем 0
+            return new Term("0", ""); // Если переменной нет, возвращаем 0
         }
     }
 
