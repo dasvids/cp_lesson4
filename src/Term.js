@@ -5,16 +5,12 @@ class Term {
     }
 
     toString() {
-        if (this.sign === "+" || this.sign === "") {
-            if (this.expr === "0") {
-                return "0";
-            }
+        if (this.sign === "+") {
             return this.expr;
         } else if (this.sign === "-") {
-            if (this.expr === "0") {
-                return "0";
-            }
             return `-${this.expr}`;
+        } else {
+            return this.expr;
         }
     }
 
