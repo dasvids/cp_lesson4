@@ -1,16 +1,16 @@
+
 import {MiniMaple} from "../src/miniMaple";
+document.addEventListener("DOMContentLoaded", function() {
+    const submitButton = document.getElementById("submitButton");
+    const expressionInput = document.getElementById("expression");
+    const resultParagraph = document.getElementById("result");
 
-document.addEventListener('DOMContentLoaded',setup)
-
-function setup() {
-    document.getElementById('demoButton').onclick = addSomething;
-}
-
-function addSomething(){
-    const someDummyDiv = document.createElement('div');
-    someDummyDiv.classList.add('generated');
-    const count = document.getElementsByClassName('generated').length;
-    someDummyDiv.innerHTML = `I was created by JS! There are already ${count} of my friends!`;
-    const container = document.getElementById('container');
-    container.appendChild(someDummyDiv);
-}
+    // Добавляем обработчик события "click" на кнопку
+    submitButton.addEventListener("click", function() {
+        // Получаем значение из поля ввода
+        const expression = expressionInput.value;
+        let maple = new MiniMaple(expression);
+        resultParagraph.textContent = maple.differentiate('x').toString();
+        //alert(expression);
+    });
+});

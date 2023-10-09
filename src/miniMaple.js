@@ -1,4 +1,4 @@
-import { Term } from "./Term.js";
+import { Term } from "./Term";
 
 class MiniMaple {
   constructor(expression) {
@@ -33,7 +33,8 @@ class MiniMaple {
 
     let terms = this.splitTerms();
     //return ''.join(terms.map((term) => term.differentiate(variable))); //python moment -_-
-    return terms.map((term) => term.differentiate(variable)).join('')
+    let res = terms.map((term) => term.differentiate(variable).toString()).join('')
+    return res.startsWith('+')? res.substring(1) : res;
   }
 }
 export { MiniMaple }
