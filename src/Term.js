@@ -27,9 +27,7 @@ class Term {
             if (power === 0) {
                 return new Term("0", "+"); // ну очевидно что произойдет
             }
-            if (newPower === 0) {
-                return new Term("0", "+");
-            } else if (newPower === 1) {
+            else if (newPower === 1) {
                 return new Term(`${newCoefficient}*${variable}`, this.sign);
             } else {
                 return new Term(`${newCoefficient}*${variable}^${newPower}`, this.sign);

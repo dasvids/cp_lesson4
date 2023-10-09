@@ -79,7 +79,7 @@ describe('Term', () => {
         expect(result.toString()).toBe('10*x^4');
     });
 
-    it('should return a Term with coefficient 0 when newPower is 0', () => {
+    it('should return a Term with coefficient 0 and sign + when Power is 0', () => {
         const term = new Term("2*x^0", "+");
         const result = term.differentiate('x');
         expect(result.toString()).toBe('0');
