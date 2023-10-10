@@ -61,12 +61,13 @@ class Term {
     toString() {
         let result = this.sign;
 
-        if (this.coef !== 1 || this.base === '' || this.exponent !== 0) {
+        if (this.coef !== 1 && (this.base === '' || this.exponent !== 0)) {
             result += this.coef;
         }
 
         if (this.base !== '' && this.exponent!== 0) {
-            result += '*' + this.base;
+            result += this.coef !== 1 ? '*':'';
+            result += this.base;
         }
 
         if (this.exponent !== 0 && this.exponent > 1) {  
