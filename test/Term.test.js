@@ -1,87 +1,59 @@
-import {Term} from "../src/Term.js";
+import { Term } from "../src/Term.js";
 
-describe('Term', () => {
-    it('should differentiate 4*x^3 with respect to x', () => {
-        const term = new Term("4*x^3","+");
-        const result = term.differentiate('x');
-        expect(result.toString()).toBe('12*x^2');
+describe('Term class', () => {
+    it('should create a term with correct properties', () => {
+        const term = new Term('-', 3, 'x', 2);
+        expect(term.sign).toBe('-');
+        expect(term.coef).toBe(3);
+        expect(term.base).toBe('x');
+        expect(term.exponent).toBe(2);
     });
 
-    it('should differentiate -4*x^3 with respect to x', () => {
-        const term = new Term("4*x^3","-");
-        const result = term.differentiate('x');
-        expect(result.toString()).toBe('-12*x^2');
+    it('should correctly format term to string', () => {
+        const term1 = new Term('+', 4, 'x', 3);
+        const term2 = new Term('-', 1.5, 'y', -2);
+        const term3 = new Term('-', 2, 'z', 0);
+
+        expect(term1.toString()).toBe('+4*x^3');
+        expect(term2.toString()).toBe('-1.5*y^(-2)');
+        expect(term3.toString()).toBe('-2');
     });
 
-    it('should differentiate 4*x^-3 with respect to x', () => {
-        const term = new Term("4*x^-3","+");
-        const result = term.differentiate('x');
-        expect(result.toString()).toBe('-12*x^-4');
+    it('should differentiate correctly', () => {
+        const term1 = new Term('+', 4, 'x', 3);
+        const term2 = new Term('-', 1.5, 'x', -2);
+        const term3 = new Term('-', 2, 'y', 0);
+
+        const diff1 = term1.differentiate('x');
+        const diff2 = term2.differentiate('x');
+        const diff3 = term3.differentiate('y');
+
+        expect(diff1.toString()).toBe('+12*x^2');
+        expect(diff2.toString()).toBe('+3*x^(-3)');
+        expect(diff3.toString()).toBe('+0');
     });
 
-    it('should differentiate -4*x^-3 with respect to x', () => {
-        const term = new Term("4*x^-3","-");
-        const result = term.differentiate('x');
-        expect(result.toString()).toBe('12*x^-4');
+    it('should differentiate correctly with sign changes', () => {
+        const term1 = new Term('-', 3, 'x', 2);
+        const term2 = new Term('-', 2, 'x', 1);
+        const term3 = new Term('-', 4, 'x', 0);
+
+        const diff1 = term1.differentiate('x');
+        const diff2 = term2.differentiate('x');
+        const diff3 = term3.differentiate('x');
+
+        expect(diff1.toString()).toBe('-6*x');
+        expect(diff2.toString()).toBe('-2');
+        expect(diff3.toString()).toBe('+0');
     });
 
-    it('should differentiate -4*x^-3 with respect to x', () => {
-        const term = new Term("4*x^-3","-");
-        const result = term.differentiate('x');
-        expect(result.toString()).toBe('12*x^-4');
-    });
+    it('should return zero derivative when variable is different from base', () => {
+        const term = new Term('-', 2, 'x', 3);
+        const variable = 'y'; // Переменная, которая не совпадает с основанием
 
-    it('should differentiate x^2 with respect to x', () => {
-        const term = new Term("x^2","+");
-        const result = term.differentiate('x');
-        expect(result.toString()).toBe('2*x');
-    });
+        const derivative = term.differentiate(variable);
 
-    it('should differentiate -x^2 with respect to x', () => {
-        const term = new Term("x^2","-");
-        const result = term.differentiate('x');
-        expect(result.toString()).toBe('-2*x');
-    });
-
-    it('should differentiate -x^2 with respect to x', () => {
-        const term = new Term("x^-2","+");
-        const result = term.differentiate('x');
-        expect(result.toString()).toBe('-2*x^-3');
-    });
-
-    it('should differentiate a constant term', () => {
-        const term = new Term("5", "+");
-        const result = term.differentiate('x');
-        expect(result.toString()).toBe('0');
-    });
-
-    it('should differentiate a term without a coefficient', () => {
-        const term = new Term("x^3", "+");
-        const result = term.differentiate('x');
-        expect(result.toString()).toBe('3*x^2');
-    });
-
-    it('should differentiate a term with a negative coefficient', () => {
-        const term = new Term("-2*x^2", "+");
-        const result = term.differentiate('x');
-        expect(result.toString()).toBe('-4*x');
-    });
-
-    it('should differentiate a term with a coefficient and negative power', () => {
-        const term = new Term("4*x^-3", "+");
-        const result = term.differentiate('x');
-        expect(result.toString()).toBe('-12*x^-4');
-    });
-
-    it('should differentiate a term with a coefficient and positive power', () => {
-        const term = new Term("2*x^5", "+");
-        const result = term.differentiate('x');
-        expect(result.toString()).toBe('10*x^4');
-    });
-
-    it('should return a Term with coefficient 0 and sign + when Power is 0', () => {
-        const term = new Term("2*x^0", "+");
-        const result = term.differentiate('x');
-        expect(result.toString()).toBe('0');
+        // Ожидаем, что производная будет нулем
+        expect(derivative.toString()).toBe('+0');
     });
 });
