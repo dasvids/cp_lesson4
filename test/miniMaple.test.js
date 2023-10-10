@@ -56,4 +56,44 @@ describe('MiniMaple', () => {
     ]);
   });
 
+  it('should differentiate a constant term correctly', () => {
+    const expression = '3';
+    const minimaple = new MiniMaple(expression);
+    const derivative = minimaple.differentiate('x');
+    
+    expect(derivative).toBe('0');
+  });
+
+  it('should differentiate a linear term correctly', () => {
+    const expression = '2*x';
+    const minimaple = new MiniMaple(expression);
+    const derivative = minimaple.differentiate('x');
+    
+    expect(derivative).toBe('2');
+  });
+
+  it('should differentiate a quadratic term correctly', () => {
+    const expression = 'x^2';
+    const minimaple = new MiniMaple(expression);
+    const derivative = minimaple.differentiate('x');
+    
+    expect(derivative).toBe('2*x');
+  });
+
+  it('should differentiate a term with negative exponent correctly', () => {
+    const expression = 'x^(-3)';
+    const minimaple = new MiniMaple(expression);
+    const derivative = minimaple.differentiate('x');
+    
+    expect(derivative).toBe('-3*x^(-4)');
+  });
+
+  it('should differentiate a complex expression correctly', () => {
+    const expression = '2*x^3-3*x^2+4*x';
+    const minimaple = new MiniMaple(expression);
+    const derivative = minimaple.differentiate('x');
+    
+    expect(derivative).toBe('6*x^2-6*x+4');
+  });
+
 });

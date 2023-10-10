@@ -56,4 +56,14 @@ describe('Term class', () => {
         // Ожидаем, что производная будет нулем
         expect(derivative.toString()).toBe('+0');
     });
+
+    it('should return -3*x^(-4) for x^(-3)', () => {
+        const term = new Term('+', 1, 'x', -3);
+        const variable = 'x'; 
+
+        const derivative = term.differentiate(variable);
+
+        // Ожидаем, что производная будет нулем
+        expect(derivative.toString()).toBe('-3*x^(-4)');
+    });
 });

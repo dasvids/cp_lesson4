@@ -100,9 +100,9 @@ class Term {
             newExponent = this.exponent - 1;
 
 
-            if (this.sign === '-' && this.exponent < 0) {
-                newSign = '+';
-            }
+            if (this.exponent < 0) {
+                newSign = this.sign === '-' ? '+': '-';
+            } 
         }
 
         if (newExponent === 0) {
